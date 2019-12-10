@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Session;
+use Redirect;
+
 
 class CategoryController extends Controller
 {
@@ -14,7 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('categories.index',compact('categories'));
     }
 
     /**
@@ -35,7 +39,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
+        //validacion
+        $rules = [
+          'name' => 'required', 
+        
+
+        ];
+
+        $messages = [
+          'name.required' =>'Es obligatorio llenar este campo',
+          
+          
+        ];
+
+         $this->validate($request, $rules, $messages);
+        
+
+         Category::create($request->all());
+         Session::flash('message','Categoría creada correctamente');
+         return redirect()->route('categories.index');
     }
 
     /**
