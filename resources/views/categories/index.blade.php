@@ -25,7 +25,20 @@
                          <tr>
                          <th scope="row">{{ $category->id }}</th>
                          <td>{{ $category->name }}</td>
-                         <td></td>
+                         <td class="d-flex" >
+                             
+                         </div>
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-success mr-2">Editar</a>
+                             <form action="{{ route('categories.destroy',$category->id) }}" method="POST">
+                                                     @csrf
+                                                     @method('DELETE')
+                                       
+                             <button type="submit" class="btn btn-danger  "  onclick="return confirm('Quiere borrar el registro?')" >Eliminar</button>
+
+                         </form>
+
+                         </td>
+                          
                        
                        </tr>
                         @endforeach

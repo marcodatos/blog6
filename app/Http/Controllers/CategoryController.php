@@ -42,7 +42,7 @@ class CategoryController extends Controller
         //validacion
         $rules = [
           'name' => 'required', 
-        
+       
 
         ];
 
@@ -79,7 +79,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+       $category = Category::find($id);
+       return view('categories.edit' ,compact('category'));
     }
 
     /**
@@ -91,7 +92,26 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       //validacion
+       $rules = [
+         'name' => 'required', 
+       
+
+       ];
+
+       $messages = [
+         'name.required' =>'Es obligatorio llenar este campo',
+         
+         
+       ];
+
+        $this->validate($request, $rules, $messages);
+       
+
+        $category = Category::find($id);
+        $category->update($request->all());
+        Session::flash('message','Categoría actualizada correctamente');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -102,6 +122,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+        Session::flash('message','Categoría ha sido borrada correctamente');
+        return redirect()->route('categories.index');
     }
 }
