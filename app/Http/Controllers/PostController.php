@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Category;
+use Auth;
 
 class PostController extends Controller
 {
@@ -23,7 +26,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+       $user = User::find(Auth::User()->id);
+       $categories = Category::all();
+       return view('posts.create',compact('categories','user'));
     }
 
     /**
