@@ -26,7 +26,10 @@
 
                         <div class="form-group">
                             <label class="form-control-label"> Título de la publicación </label>
-                            <input type="text"  class="form-control form-control-alternative" placeholder="" value="{{ old('title') }}" name="title">           
+                            <input type="text"  class="form-control form-control-alternative" placeholder="" value="{{ old('title') }}" name="title">  
+                              @if ($errors->has('title'))
+                             <strong class="text-danger" >{{ $errors->first('title') }}</strong>
+                             @endif         
                                        
                         </div>
 

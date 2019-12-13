@@ -1,11 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\User;
 use App\Category;
+use App\Post;
 use Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Session;
+use Redirect;
+
 
 class PostController extends Controller
 {
@@ -16,9 +20,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        
+        $posts = Post::all();
+        return view('posts.index',compact('posts'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -30,7 +35,6 @@ class PostController extends Controller
        $categories = Category::all();
        return view('posts.create',compact('categories','user'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -39,9 +43,36 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+         //validacion
+        $rules = [
+          'title' => 'required', 
+          'image' =>'mimes:jpeg,bmp,png,jpg,gif|max:2000',
+         ];
 
+        $messages = [
+          'title.required' =>'Es obligatorio un título para la publicación',
+          'image.mimes' =>'El archivo debe  corresponder a un formato de imagen',
+          'image.max' =>'La imagen no debe ser mayor que 2 mb.'
+          
+          
+        ];
+         $this->validate($request, $rules, $messages);
+
+         $post = new Post($request->all());
+         $post->slug = Str::slug($request->title);
+         $post->save();
+
+         if ($request->file('image')) {
+            $nombre = Storage::disk('imaposts')->put('imagenes/posts',  $request->file('image') );
+            $post->fill(['image' => asset($nombre)] )->save();
+         }
+          Session::flash('message','Publicación creada correctamente');
+         return redirect()->route('posts.index');
+
+         
+
+
+    }
     /**
      * Display the specified resource.
      *
@@ -52,7 +83,6 @@ class PostController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -63,7 +93,6 @@ class PostController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -75,7 +104,6 @@ class PostController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
