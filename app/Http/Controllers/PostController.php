@@ -93,7 +93,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post =Post::find($id);
+        $categories = Category::all();
+        return view('posts.edit',compact('post','categories'));
     }
     /**
      * Update the specified resource in storage.
@@ -104,7 +106,40 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //validacion
+        $rules = [
+          'title' => 'required', 
+          'body' => 'required', 
+          'image' =>'mimes:jpeg,bmp,png,jpg,gif|max:2000',
+         ];
+
+        $messages = [
+          'title.required' =>'Es obligatorio un título para la publicación',
+          'body.required' =>'Es obligatorio un contenido para la publicación',
+          'image.mimes' =>'El archivo debe  corresponder a un formato de imagen',
+          'image.max' =>'La imagen no debe ser mayor que 2 mb.'
+          
+             
+             
+           ];
+            $this->validate($request, $rules, $messages);
+        
+            $post = Post::find($id); 
+            $post->slug =  Str::slug($request->title);
+            $post->update($request->all());
+
+           if($request->file('image')){
+            $nombre = Storage::disk('imaposts')->put('imagenes/posts',  $request->file('image'));
+            $post->fill(['image' => asset($nombre)])->save();
+          }  
+
+
+
+
+
+
+           Session::flash('message','Publicación actualizada correctamente');
+          return redirect()->route('posts.index');
     }
     /**
      * Remove the specified resource from storage.
@@ -114,6 +149,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id); 
+        $post->delete();
+        Session::flash('message','Publicación borrada  correctamente');
+        return redirect()->route('posts.index');
     }
 }
