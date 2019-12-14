@@ -46,11 +46,13 @@ class PostController extends Controller
          //validacion
         $rules = [
           'title' => 'required', 
+          'body' => 'required', 
           'image' =>'mimes:jpeg,bmp,png,jpg,gif|max:2000',
          ];
 
         $messages = [
           'title.required' =>'Es obligatorio un título para la publicación',
+          'body.required' =>'Es obligatorio un contenido para la publicación',
           'image.mimes' =>'El archivo debe  corresponder a un formato de imagen',
           'image.max' =>'La imagen no debe ser mayor que 2 mb.'
           

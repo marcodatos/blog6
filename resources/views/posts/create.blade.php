@@ -36,13 +36,20 @@
 
                       <div class="form-group">
                           <label class="form-control-label">Contenido</label>
-                              <textarea class="form-control"  rows="3" name="body"></textarea>
+                              <textarea class="form-control"  rows="3" name="body">{{ old('body') }}</textarea>
+
+                               @if ($errors->has('body'))
+                             <strong class="text-danger" >{{ $errors->first('body') }}</strong>
+                             @endif 
 
                       </div>
 
                       <div class="form-group">
                             <label class="form-control-label"> Portada </label>
-                            <input type="file"  class="form-control form-control-alternative" placeholder="" value="" name="image">           
+                            <input type="file"  class="form-control form-control-alternative" placeholder="" value="" name="image">
+                               @if ($errors->has('image'))
+                             <strong class="text-danger" >{{ $errors->first('image') }}</strong>
+                             @endif             
                                        
                         </div>
 
