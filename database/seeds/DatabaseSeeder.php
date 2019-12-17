@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,17 +13,39 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
-
-         
+                 
          DB::table('users')->insert([
 	           	 'id'       => '1',	
 	           	 'name' => 'Julio Verne',
 	           	 'email' => 'verne@correo.net',
 	           	 'password' => bcrypt('1234'),
 	           	 'created_at' => now(),
-                 'updated_at' => now()	
+               'updated_at' => now()	
 	             
 	    ]);
+           DB::table('users')->insert([
+               'id'       => '2', 
+               'name' => 'Isaac Asimov',
+               'email' => 'asimov@correo.net',
+               'password' => bcrypt('1234'),
+               'created_at' => now(),
+               'updated_at' => now()  
+               
+      ]);
+
+          DB::table('users')->insert([
+               'id'       => '3', 
+               'name' => 'Carl Sagan',
+               'email' => 'sagan@correo.net',
+               'password' => bcrypt('1234'),
+               'created_at' => now(),
+               'updated_at' => now()  
+               
+      ]);
+        
+
+
+
 
            DB::table('categories')->insert([
                    'id'       => '1', 
@@ -54,7 +77,11 @@ class DatabaseSeeder extends Seeder
                    'created_at' => now(),
                    'updated_at' => now()  
                        
-           ]);   
+           ]); 
+
+
+            factory('App\Post',20)->create();
+           
 
 
 
