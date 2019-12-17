@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
  //rutas del frontend
 
 Route::get('/','FrontController@index');
+Route::get('post/{slug}','FrontController@post');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('categories', 'CategoryController');

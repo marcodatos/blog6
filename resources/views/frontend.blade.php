@@ -11,9 +11,9 @@
             <div class="col p-4 d-flex flex-column position-static">
               <strong class="d-inline-block mb-2 text-primary">{{ $post->category->name }}</strong>
               <h3 class="mb-0">{{$post->title }}</h3>
-              <div class="mb-1 text-muted">{{ $post->created_at }}</div>
+              <div class="mb-1 text-muted">{{ $post->created_at->format('d/m/Y') }}</div>
               <p class="card-text mb-auto">{{ substr($post->body, 0,40) }}...</p>
-              <a href="#" class="stretched-link">Continuar leyendo</a>
+              <a href="{{ 'post' }}/{{ $post->slug }}" class="stretched-link">Continuar leyendo</a>
             </div>
             <div class="col-auto d-none d-lg-block">
              <div class="col-auto d-none d-lg-block">
