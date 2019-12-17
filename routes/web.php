@@ -19,7 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
- 
+ //rutas del frontend
+
+Route::get('/','FrontController@index');
+
 Route::middleware(['auth'])->group(function () {
     Route::resource('categories', 'CategoryController');
     Route::resource('posts', 'PostController');
