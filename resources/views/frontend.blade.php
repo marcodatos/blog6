@@ -15,12 +15,12 @@
               <p class="card-text mb-auto">{{ substr($post->body, 0,40) }}...</p>
               <a href="{{ 'post' }}/{{ $post->slug }}" class="stretched-link">Continuar leyendo</a>
             </div>
-            <div class="col-auto d-none d-lg-block">
+           
              <div class="col-auto d-none d-lg-block">
                 <img  src="{{ $post->image }}" class="bd-placeholder-img" width="200" height="200" ><rect width="100%" height="100%" fill="#55595c"></rect></img>
                  </div>
             </div>
-          </div>
+          
         </div>
        @endforeach
        
